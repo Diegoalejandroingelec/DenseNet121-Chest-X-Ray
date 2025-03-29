@@ -28,11 +28,17 @@ NUM_CLASSES = len(CLASSES)
 # -----------------------------
 train_datagen = ImageDataGenerator(
     rescale=1.0/255,
-    rotation_range=10,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
+    rotation_range=20,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
     horizontal_flip=True,
-    fill_mode='nearest'
+    vertical_flip=False,
+    zoom_range=0.2,
+    brightness_range=[0.8, 1.2],
+    shear_range=0.15,
+    channel_shift_range=0.1,
+    fill_mode='reflect',
+    preprocessing_function=lambda x: tf.image.random_contrast(x, lower=0.8, upper=1.2)
 )
 
 val_datagen = ImageDataGenerator(rescale=1.0/255)
@@ -63,7 +69,7 @@ test_generator = test_datagen.flow_from_directory(
 # -----------------------------
 # C) Load or Build Model
 # -----------------------------
-checkpoint_path = "best_model.h5"
+checkpoint_path = "best_model_modified.h5"
 model = None
 
 if os.path.exists(checkpoint_path):
@@ -79,16 +85,16 @@ else:
     model = models.Sequential([
         base_model,
         layers.GlobalAveragePooling2D(),
-        layers.Dense(1024, activation='relu'),
+        layers.Dense(2024, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.01)),
         layers.BatchNormalization(),
         layers.Dropout(0.3),
-        layers.Dense(512, activation='relu'),
+        layers.Dense(1024, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.01)),
         layers.BatchNormalization(),
         layers.Dropout(0.3),
-        layers.Dense(256, activation='relu'),
+        layers.Dense(512, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.01)),
         layers.BatchNormalization(),
         layers.Dropout(0.3),
-        layers.Dense(NUM_CLASSES, activation='softmax')
+        layers.Dense(NUM_CLASSES, activation='softmax', kernel_regularizer=tf.keras.regularizers.l2(0.01))
     ])
 
 # Compile with higher learning rate

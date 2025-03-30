@@ -69,7 +69,7 @@ test_generator = test_datagen.flow_from_directory(
 # -----------------------------
 # C) Load or Build Model
 # -----------------------------
-checkpoint_path = "best_model_modified.h5"
+checkpoint_path = "best_model_modified_1.h5"
 model = None
 
 if os.path.exists(checkpoint_path):
@@ -85,16 +85,16 @@ else:
     model = models.Sequential([
         base_model,
         layers.GlobalAveragePooling2D(),
-        layers.Dense(2024, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.01)),
+        layers.Dense(2024, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.1)),
         layers.BatchNormalization(),
-        layers.Dropout(0.3),
-        layers.Dense(1024, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.01)),
+        layers.Dropout(0.5),
+        layers.Dense(1024, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.1)),
         layers.BatchNormalization(),
-        layers.Dropout(0.3),
-        layers.Dense(512, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.01)),
+        layers.Dropout(0.5),
+        layers.Dense(512, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(0.1)),
         layers.BatchNormalization(),
-        layers.Dropout(0.3),
-        layers.Dense(NUM_CLASSES, activation='softmax', kernel_regularizer=tf.keras.regularizers.l2(0.01))
+        layers.Dropout(0.5),
+        layers.Dense(NUM_CLASSES, activation='softmax', kernel_regularizer=tf.keras.regularizers.l2(0.1))
     ])
 
 # Compile with higher learning rate

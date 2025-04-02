@@ -197,7 +197,35 @@ print(f"\nTraining complete! Model saved as 'best_model_tuned.h5'")
 print(f"To view training metrics in TensorBoard, run: tensorboard --logdir logs")
 
 # -----------------------------
-# I) Evaluate on Test Set and Plot Confusion Matrix
+# I) Plot Training History
+# -----------------------------
+# Plot training history
+plt.figure(figsize=(16, 6))
+
+# Plot accuracy
+plt.subplot(1, 2, 1)
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.title('Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+
+# Plot loss
+plt.subplot(1, 2, 2)
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.title('Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.tight_layout()
+plt.savefig('training_history.png')
+plt.show()
+
+# -----------------------------
+# J) Evaluate on Test Set and Plot Confusion Matrix
 # -----------------------------
 print("\nEvaluating model on test set...")
 test_datagen = ImageDataGenerator(rescale=1.0/255)

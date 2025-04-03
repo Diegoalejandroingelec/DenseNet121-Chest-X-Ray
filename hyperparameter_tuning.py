@@ -116,14 +116,14 @@ os.makedirs('checkpoints', exist_ok=True)
 
 # Callbacks for hyperparameter search (without checkpoint)
 search_callbacks = [
-    EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
+    EarlyStopping(monitor='val_accuracy', patience=15, restore_best_weights=True),
     ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=1e-7),
     tensorboard_cb
 ]
 
 # Callbacks for final training (with checkpoint)
 final_callbacks = [
-    EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True),
+    EarlyStopping(monitor='val_accuracy', patience=15, restore_best_weights=True),
     ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=1e-7),
     tensorboard_cb,
     ModelCheckpoint(

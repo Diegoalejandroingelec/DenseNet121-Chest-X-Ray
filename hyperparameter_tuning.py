@@ -154,7 +154,7 @@ tuner.search(
         class_mode='categorical'
     ),
     callbacks=search_callbacks,  # Use search callbacks without checkpoint
-    epochs=50  # Fixed epochs
+    epochs=100  # Fixed epochs
 )
 
 # -----------------------------

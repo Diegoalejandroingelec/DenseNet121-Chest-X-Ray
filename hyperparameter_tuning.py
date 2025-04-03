@@ -169,6 +169,18 @@ print(f"Dense Units 2: {best_hps.get('dense_units_2')}")
 print(f"Dense Units 3: {best_hps.get('dense_units_3')}")
 print(f"Learning Rate: {best_hps.get('learning_rate')}")
 
+# Save hyperparameters to text file
+hp_filename = f"best_hyperparameters_{timestamp}.txt"
+with open(hp_filename, 'w') as f:
+    f.write(f"Best Hyperparameters (saved on {timestamp}):\n")
+    f.write(f"L2 Regularization: {best_hps.get('l2_reg')}\n")
+    f.write(f"Dropout Rate: {best_hps.get('dropout_rate')}\n")
+    f.write(f"Dense Units 1: {best_hps.get('dense_units_1')}\n")
+    f.write(f"Dense Units 2: {best_hps.get('dense_units_2')}\n")
+    f.write(f"Dense Units 3: {best_hps.get('dense_units_3')}\n")
+    f.write(f"Learning Rate: {best_hps.get('learning_rate')}\n")
+print(f"Best hyperparameters saved to {hp_filename}")
+
 # -----------------------------
 # H) Train Final Model with Best Hyperparameters
 # -----------------------------
@@ -187,7 +199,7 @@ history = model.fit(
         batch_size=8,  # Fixed batch size
         class_mode='categorical'
     ),
-    epochs=50,  # Fixed epochs
+    epochs=100,  # Fixed epochs
     callbacks=final_callbacks  # Use final callbacks with checkpoint
 )
 
@@ -222,7 +234,7 @@ plt.legend()
 
 plt.tight_layout()
 plt.savefig('training_history.png')
-plt.show()
+plt.close()
 
 # -----------------------------
 # J) Evaluate on Test Set and Plot Confusion Matrix

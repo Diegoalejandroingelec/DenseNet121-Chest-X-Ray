@@ -94,6 +94,12 @@ tuner = kt.RandomSearch(
     project_name='densenet121_tuning'
 )
 
+# Load the previous results - this is critical for resuming
+tuner.reload()
+
+# Print how many trials have been completed so far
+print(f"Trials completed so far: {len(tuner.oracle.trials)}")
+
 # -----------------------------
 # E) Callbacks
 # -----------------------------
@@ -138,7 +144,7 @@ final_callbacks = [
 # -----------------------------
 # F) Run Hyperparameter Search
 # -----------------------------
-print(f"\nStarting hyperparameter search. TensorBoard logs will be saved to: {log_dir}")
+print(f"\nResuming hyperparameter search from previous trials. TensorBoard logs will be saved to: {log_dir}")
 print(f"To view TensorBoard, run: tensorboard --logdir {log_dir}")
 tuner.search(
     train_datagen.flow_from_directory(

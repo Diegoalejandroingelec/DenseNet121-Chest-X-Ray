@@ -14,7 +14,7 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 # A) Directory Setup & Hyperparams
 # -----------------------------
 OUTPUT_DIR = './balanced_dataset'
-CLASSES = ['Atelectasis', 'Cardiomegaly', 'No Finding', 'Nodule', 'Pneumothorax']
+CLASSES = ['Atelectasis', 'Cardiomegaly', 'Nodule', 'Pneumothorax']
 
 TRAIN_DIR = os.path.join(OUTPUT_DIR, 'train')
 VAL_DIR   = os.path.join(OUTPUT_DIR, 'val')
@@ -86,19 +86,25 @@ def build_model(hp):
 # -----------------------------
 # D) Tuner Setup
 # -----------------------------
-tuner = kt.RandomSearch(
+# Configuration flag - Set to True to start fresh, False to resume previous work
+START_FRESH = True  # Change this to False when you want to resume previous work
+
+tuner = kt.BayesianOptimization(
     build_model,
     objective='val_accuracy',
-    max_trials=20,  # Number of trials to run
+    max_trials=10,  # Number of trials to run
     directory='hyperparameter_tuning',
-    project_name='densenet121_tuning'
+    project_name='densenet121_tuning',
+    overwrite=START_FRESH,  # Overwrite if starting fresh
+    num_initial_points=3  # Number of random trials before starting Bayesian optimization
 )
 
-# Load the previous results - this is critical for resuming
-tuner.reload()
-
-# Print how many trials have been completed so far
-print(f"Trials completed so far: {len(tuner.oracle.trials)}")
+# Only reload if we're not starting fresh
+if not START_FRESH:
+    tuner.reload()
+    print(f"Resuming previous work. Trials completed so far: {len(tuner.oracle.trials)}")
+else:
+    print("Starting fresh hyperparameter optimization")
 
 # -----------------------------
 # E) Callbacks

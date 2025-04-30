@@ -2,3 +2,13 @@
 *.h5
 *.zip
 logs/*
+hyperparameter_tuning_5_new_classes_1500_compressed/*
+hyperparameter_tuning_5_new_classes_compressed/*
+hyperparameter_tuning_5_new_classes_1500_compressed/densenet121_tuning/*
+hyperparameter_tuning_5_new_classes_compressed/densenet121_tuning/*
+hyperparameter_tuning_5_new_classes_1500_compressed/densenet121_tuning/trial_01/*
+hyperparameter_tuning_5_new_classes_compressed/densenet121_tuning/trial_01/*
+
+logs_compressed_5_classes_new/*
+
+logs_compressed_5_classes_new_1500/*

@@ -1,0 +1,11 @@
+              precision    recall  f1-score   support
+
+ Atelectasis       0.70      0.59      0.64       110
+Cardiomegaly       0.76      0.76      0.76       110
+    Effusion       0.71      0.76      0.73       110
+      Nodule       0.71      0.75      0.73       110
+Pneumothorax       0.78      0.80      0.79       110
+
+    accuracy                           0.73       550
+   macro avg       0.73      0.73      0.73       550
+weighted avg       0.73      0.73      0.73       550
